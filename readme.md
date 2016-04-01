@@ -4,7 +4,7 @@ After going through Dan Abramov's [Getting Started with Redux](https://egghead.i
 
 ## Notes
 
-I have skipped all the building steps, no npm, no webpack, just React, ReactDOM, Redux and Babel in the browser. All loaded via [cdnjs.com](https://cdnjs.com/). All being the latest versions except for babel-core which remains at 5 due to the packaging needed from 6 onwards.
+I have skipped all the building steps, no npm, no webpack, just React, ReactDOM, Redux and Babel in the browser. All loaded via [cdnjs.com](https://cdnjs.com/). All are the latest versions except for babel-core which remains at 5 due to the packaging needed from 6 onwards.
 
 Components are simple objects:
 
