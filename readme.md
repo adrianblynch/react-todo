@@ -4,7 +4,7 @@ After going through Dan Abramov's [https://egghead.io/series/getting-started-wit
 
 ## Notes
 
-I have skipped all the building steps, no npm, no webpack, just React, ReactDOM, Redux and Babel in the browser.
+I have skipped all the building steps, no npm, no webpack, just React, ReactDOM, Redux and Babel in the browser. All loaded via [https://cdnjs.com/](cdnjs.com). All being the latest versions except for babel-core which remains at 5 due to the packaging needed from 6 onwards.
 
 Components are simple objects:
 
@@ -40,3 +40,7 @@ Application state is stored and managed with Redux.
 However, I don't pass behaviour through parent components to child components, instead I let the child components dispatch actions directly.
 
 Why? To simplify parent usage and so as not to introduce container components.
+
+One reducer is used, again to simplify things for now. Although you could argument the bigger reducer is less simple than separate ones.
+
+I've tried to remember to use ES2015 JS where possible. Spreading over arrays and objects, lambda functions, default arguments and shorthand object properties.
