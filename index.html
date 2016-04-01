@@ -29,8 +29,8 @@
 
 	const intialState = {
 		todos: [
-			{ id: getNextTodoId(), text: 'Do', complete: true },
-			{ id: getNextTodoId(), text: 'Stuff', complete: false }
+			{ id: getNextTodoId(), text: 'Learn more React', complete: true },
+			{ id: getNextTodoId(), text: 'Style this!', complete: false }
 		],
 		filter: 'All'
 	}
@@ -41,7 +41,11 @@
 				return Object.assign({}, state, {
 					todos: [
 						...state.todos,
-						{ id: getNextTodoId(), text: action.text, complete: false }
+						{
+							id: getNextTodoId(),
+							text: action.text,
+							complete: false
+						}
 					]
 				})
 			case 'FILTER_TODOS':
@@ -52,7 +56,9 @@
 				return Object.assign({}, state, {
 					todos: state.todos.map(todo => {
 						if (todo.id === action.id) {
-							return Object.assign({}, todo, { complete: !todo.complete })
+							return Object.assign({}, todo, {
+								complete: !todo.complete
+							})
 						}
 						return todo
 					})
@@ -74,7 +80,7 @@
 				<h1>React Todo</h1>
 				<AddTodo />
 				{ filter }
-				<Todos todos={ state.todos } filter={ state.filter } />
+				<Todos { ...state } />
 				{ filter }
 			</div>
 		)
