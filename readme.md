@@ -1,10 +1,10 @@
 # React Todo
 
-After going through Dan Abramov's [https://egghead.io/series/getting-started-with-redux](Getting Started with Redux) on [https://egghead.io/](egghead.io), this is my attempt at a Todo application.
+After going through Dan Abramov's [Getting Started with Redux](https://egghead.io/series/getting-started-with-redux) on [egghead.io](https://egghead.io/), this is my attempt at a Todo application.
 
 ## Notes
 
-I have skipped all the building steps, no npm, no webpack, just React, ReactDOM, Redux and Babel in the browser. All loaded via [https://cdnjs.com/](cdnjs.com). All being the latest versions except for babel-core which remains at 5 due to the packaging needed from 6 onwards.
+I have skipped all the building steps, no npm, no webpack, just React, ReactDOM, Redux and Babel in the browser. All loaded via [cdnjs.com](https://cdnjs.com/). All being the latest versions except for babel-core which remains at 5 due to the packaging needed from 6 onwards.
 
 Components are simple objects:
 
