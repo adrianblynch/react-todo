@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head>
+	<title>React Todo</title>
+	<script src="build/react.min.js"></script>
+    <script src="build/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.3.1/redux.min.js"></script>
+    <style>
+    	li {
+    		cursor: pointer;
+    	}
+    	li.complete {
+    		text-decoration: line-through;
+    	}
+    	p.filter a {
+    		text-decoration: underline;
+    		cursor: pointer;
+    	}
+    </style>
+</head>
+<body>
+<div id="app"></div>
+<script type="text/babel">
+
+	let nextTodoId = 0
+
+	const getNextTodoId = () => nextTodoId++
+
+	const intialState = {
+		todos: [
+			{ id: getNextTodoId(), text: 'Do', complete: true },
+			{ id: getNextTodoId(), text: 'Stuff', complete: false }
+		],
+		filter: 'All'
+	}
+
+	const reducer = (state = initialState, action) => {
+		switch (action.type) {
+			case 'ADD_TODO':
+				return Object.assign({}, state, {
+					todos: [
+						...state.todos,
+						{ id: getNextTodoId(), text: action.text, complete: false }
+					]
+				})
+			case 'FILTER_TODOS':
+				return Object.assign({}, state, {
+					filter: action.value
+				})
+			case 'TOGGLE_TODO':
+				return Object.assign({}, state, {
+					todos: state.todos.map(todo => {
+						if (todo.id === action.id) {
+							return Object.assign({}, todo, { complete: !todo.complete })
+						}
+						return todo
+					})
+				})
+			default:
+				return state
+		}
+	}
+
+	const store = Redux.createStore(reducer, intialState)
+
+	const TodoApp = () => {
+
+		const filter = <Filter />
+		const state = store.getState()
+
+		return (
+			<div>
+				<h1>React Todo</h1>
+				<AddTodo />
+				{ filter }
+				<Todos todos={ state.todos } filter={ state.filter } />
+				{ filter }
+			</div>
+		)
+	}
+
+	const AddTodo = ({
+		onAddTodo
+	}) => {
+		let input
+		return (
+			<div>
+				<input
+					ref={ node => input = node }
+					placeholder="Todo..."
+				/>
+				<button
+					onClick={() => {
+						store.dispatch({ type: 'ADD_TODO', text: input.value })
+						input.value = ''
+					}}
+				>Add todo</button>
+			</div>
+		)
+	}
+
+	const Filter = ({
+		onFilter
+	}) => {
+		const filterClick = (event) => {
+			store.dispatch({ type: 'FILTER_TODOS', value: event.target.innerText })
+		}
+		return (
+			<p className="filter">
+				Show:
+				{' '}
+				<a onClick={ filterClick }>All</a>
+				{' '}
+				<a onClick={ filterClick }>Done</a>
+				{' '}
+				<a onClick={ filterClick }>Todo</a>
+			</p>
+		)
+	}
+
+	const Todos = ({
+		todos,
+		filter
+	}) => {
+		const completeFilter = (todo) => {
+			return (
+				filter === 'All' ||
+				(filter === 'Done' && todo.complete) ||
+				(filter === 'Todo' && !todo.complete)
+			)
+		}
+		return (
+			<ul>
+				{
+					todos
+						.filter(completeFilter)
+						.map(todo => <Todo { ...todo } key={ todo.id } />)
+				}
+			</ul>
+		)
+	}
+
+	const Todo = ({
+		id,
+		text,
+		complete
+	}) => (
+		<li
+			className={ complete ? 'complete' : '' }
+			onClick={ () => { store.dispatch({ type: 'TOGGLE_TODO', id }) } }
+		>{ text }</li>
+	)
+
+	const renderApp = () => {
+		ReactDOM.render(
+			<TodoApp />,
+			document.getElementById('app')
+		)
+	}
+
+	renderApp()
+	store.subscribe(renderApp)
+
+</script>
+</body>
+</html>
