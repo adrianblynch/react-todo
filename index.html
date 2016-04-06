@@ -2,20 +2,44 @@
 <html>
 <head>
 	<title>React Todo</title>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.0-rc.2/react.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.0-rc.2/react-dom.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.3.1/redux.min.js"></script>
+	<script src="libs/babel-core/5.8.34/browser.min.js"></script>
+	<script src="libs/react/15.0.0-rc.2/react.min.js"></script>
+	<script src="libs/react/15.0.0-rc.2/react-dom.min.js"></script>
+	<script src="libs/redux/3.3.1/redux.min.js"></script>
 	<style>
+		ul {
+			list-style-type: none;
+			margin: 0px;
+			padding: 0px;
+		}
 		li {
 			cursor: pointer;
+			padding: 10px;
+			border-top: 1px solid #ccc;
+		}
+		li:first-child {
+			border-top: 0px;
 		}
 		li.complete {
 			text-decoration: line-through;
 		}
+		p.filter {
+			padding: 10px;
+		}
 		p.filter a {
 			text-decoration: underline;
 			cursor: pointer;
+		}
+		div.addTodo {
+			padding: 10px;
+		}
+		input[type='text'] {
+			outline: none;
+		}
+		.border {
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-shadow: 0px 8px 6px -6px #444;
 		}
 	</style>
 </head>
@@ -30,7 +54,8 @@
 	const intialState = {
 		todos: [
 			{ id: getNextTodoId(), text: 'Learn more React', complete: true },
-			{ id: getNextTodoId(), text: 'Style this!', complete: false }
+			{ id: getNextTodoId(), text: 'Style this!', complete: true },
+			{ id: getNextTodoId(), text: 'Use css modules', complete: false }
 		],
 		filter: 'All'
 	}
@@ -91,7 +116,7 @@
 	}) => {
 		let input
 		return (
-			<div>
+			<div className="addTodo border">
 				<input
 					ref={ node => input = node }
 					placeholder="Todo..."
@@ -113,7 +138,7 @@
 			store.dispatch({ type: 'FILTER_TODOS', value: event.target.innerText })
 		}
 		return (
-			<p className="filter">
+			<p className="filter border">
 				Show:
 				{' '}
 				<a onClick={ filterClick }>All</a>
@@ -137,7 +162,7 @@
 			)
 		}
 		return (
-			<ul>
+			<ul className="border">
 				{
 					todos
 						.filter(completeFilter)
